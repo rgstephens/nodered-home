@@ -1,0 +1,187 @@
+[
+  {
+    "id": "5e0963ff.a1f69c",
+    "type": "debug",
+    "z": "27dcc141.d8233e",
+    "name": "",
+    "active": false,
+    "console": "false",
+    "complete": "false",
+    "x": 677,
+    "y": 474,
+    "wires": []
+  },
+  {
+    "id": "1dd6434d.e229bd",
+    "type": "file",
+    "z": "27dcc141.d8233e",
+    "name": "/tmp/mibi.4",
+    "filename": "/tmp/mibi.4",
+    "appendNewline": true,
+    "createDir": false,
+    "overwriteFile": "true",
+    "x": 652,
+    "y": 418,
+    "wires": []
+  },
+  {
+    "id": "cefec00f.31014",
+    "type": "file",
+    "z": "27dcc141.d8233e",
+    "name": "/tmp/mibi.3",
+    "filename": "/tmp/mibi.3",
+    "appendNewline": true,
+    "createDir": false,
+    "overwriteFile": "true",
+    "x": 631,
+    "y": 349,
+    "wires": []
+  },
+  {
+    "id": "ce150365.31eb",
+    "type": "file",
+    "z": "27dcc141.d8233e",
+    "name": "/tmp/mibi.2",
+    "filename": "/tmp/mibi.2",
+    "appendNewline": true,
+    "createDir": false,
+    "overwriteFile": "true",
+    "x": 628,
+    "y": 276,
+    "wires": []
+  },
+  {
+    "id": "9e07056.f61f8f8",
+    "type": "file",
+    "z": "27dcc141.d8233e",
+    "name": "/tmp/mibi.upperwater",
+    "filename": "/tmp/mibi.upperwater",
+    "appendNewline": true,
+    "createDir": false,
+    "overwriteFile": "true",
+    "x": 628,
+    "y": 213,
+    "wires": []
+  },
+  {
+    "id": "3a3f6376.c5c09c",
+    "type": "file",
+    "z": "27dcc141.d8233e",
+    "name": "/tmp/mibi",
+    "filename": "/tmp/mibi.raw",
+    "appendNewline": false,
+    "createDir": false,
+    "overwriteFile": "true",
+    "x": 503,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "ce6fe598.319018",
+    "type": "html",
+    "z": "27dcc141.d8233e",
+    "name": "Temp4",
+    "tag": "temp4",
+    "ret": "text",
+    "as": "multi",
+    "x": 422,
+    "y": 446,
+    "wires": [
+      [
+        "5e0963ff.a1f69c",
+        "1dd6434d.e229bd"
+      ]
+    ]
+  },
+  {
+    "id": "a09143a.f5f6ec",
+    "type": "html",
+    "z": "27dcc141.d8233e",
+    "name": "Temp3",
+    "tag": "temp3",
+    "ret": "text",
+    "as": "multi",
+    "x": 427,
+    "y": 363,
+    "wires": [
+      [
+        "5e0963ff.a1f69c",
+        "cefec00f.31014"
+      ]
+    ]
+  },
+  {
+    "id": "2803606b.d7fca",
+    "type": "html",
+    "z": "27dcc141.d8233e",
+    "name": "Temp2",
+    "tag": "temp2",
+    "ret": "text",
+    "as": "multi",
+    "x": 425,
+    "y": 287,
+    "wires": [
+      [
+        "5e0963ff.a1f69c",
+        "ce150365.31eb"
+      ]
+    ]
+  },
+  {
+    "id": "df1f324c.20e0d",
+    "type": "html",
+    "z": "27dcc141.d8233e",
+    "name": "Temp1",
+    "tag": "temp1",
+    "ret": "text",
+    "as": "multi",
+    "x": 425,
+    "y": 212,
+    "wires": [
+      [
+        "9e07056.f61f8f8",
+        "5e0963ff.a1f69c"
+      ]
+    ]
+  },
+  {
+    "id": "64edc2db.9b123c",
+    "type": "http request",
+    "z": "27dcc141.d8233e",
+    "name": "Get Mibi",
+    "method": "GET",
+    "ret": "txt",
+    "url": "http://10.10.20.4/status.xml",
+    "x": 196,
+    "y": 301,
+    "wires": [
+      [
+        "3a3f6376.c5c09c",
+        "df1f324c.20e0d",
+        "2803606b.d7fca",
+        "a09143a.f5f6ec",
+        "ce6fe598.319018",
+        "5e0963ff.a1f69c"
+      ]
+    ]
+  },
+  {
+    "id": "adfc8817.520378",
+    "type": "inject",
+    "z": "27dcc141.d8233e",
+    "name": "At Start Only",
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "repeat": "",
+    "crontab": "",
+    "once": true,
+    "x": 157,
+    "y": 124,
+    "wires": [
+      [
+        "64edc2db.9b123c"
+      ]
+    ]
+  }
+]
