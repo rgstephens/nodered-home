@@ -1,0 +1,183 @@
+[
+  {
+    "id": "da701a8.f258fe8",
+    "type": "http request",
+    "z": "3bdf0832.5fc8a8",
+    "name": "Turn Off",
+    "method": "GET",
+    "ret": "txt",
+    "url": "http://10.10.20.93/?cmd=200&json={\"state\":0}",
+    "x": 645,
+    "y": 501,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "401675ec.bfe98c",
+    "type": "switch",
+    "z": "3bdf0832.5fc8a8",
+    "name": "",
+    "property": "payload.data.watt",
+    "rules": [
+      {
+        "t": "gt",
+        "v": "100"
+      }
+    ],
+    "checkall": "true",
+    "outputs": 1,
+    "x": 447,
+    "y": 436,
+    "wires": [
+      [
+        "da701a8.f258fe8"
+      ]
+    ]
+  },
+  {
+    "id": "90ea05cf.9bd4e",
+    "type": "file",
+    "z": "3bdf0832.5fc8a8",
+    "name": "/tmp/power_out",
+    "filename": "/tmp/power_out",
+    "appendNewline": true,
+    "createDir": false,
+    "overwriteFile": "false",
+    "x": 682,
+    "y": 358,
+    "wires": []
+  },
+  {
+    "id": "ad8b7770.527488",
+    "type": "template",
+    "z": "3bdf0832.5fc8a8",
+    "name": "payload",
+    "field": "payload",
+    "format": "handlebars",
+    "template": "{{timestamp}} {{payload.data.watt}} {{payload.data.amp}} {{payload.data.switch}}",
+    "x": 538,
+    "y": 280,
+    "wires": [
+      [
+        "90ea05cf.9bd4e",
+        "47e3259c.b81cdc"
+      ]
+    ]
+  },
+  {
+    "id": "47e3259c.b81cdc",
+    "type": "debug",
+    "z": "3bdf0832.5fc8a8",
+    "name": "",
+    "active": false,
+    "console": "false",
+    "complete": "false",
+    "x": 666,
+    "y": 94,
+    "wires": []
+  },
+  {
+    "id": "c301e21.4ac832",
+    "type": "debug",
+    "z": "3bdf0832.5fc8a8",
+    "name": "sdfsdf",
+    "active": false,
+    "console": "false",
+    "complete": "payload.code",
+    "x": 621,
+    "y": 32,
+    "wires": []
+  },
+  {
+    "id": "f6ace12f.6fef7",
+    "type": "switch",
+    "z": "3bdf0832.5fc8a8",
+    "name": "Check status",
+    "property": "payload.code",
+    "rules": [
+      {
+        "t": "eq",
+        "v": "200"
+      },
+      {
+        "t": "neq",
+        "v": "200"
+      }
+    ],
+    "checkall": "true",
+    "outputs": 2,
+    "x": 448,
+    "y": 81,
+    "wires": [
+      [],
+      [
+        "c301e21.4ac832"
+      ]
+    ]
+  },
+  {
+    "id": "9536ac14.4f1cc8",
+    "type": "json",
+    "z": "3bdf0832.5fc8a8",
+    "name": "json to string",
+    "x": 335,
+    "y": 263,
+    "wires": [
+      [
+        "f6ace12f.6fef7",
+        "ad8b7770.527488",
+        "401675ec.bfe98c",
+        "47e3259c.b81cdc"
+      ]
+    ]
+  },
+  {
+    "id": "8cd0d550.732f28",
+    "type": "timestamp",
+    "z": "3bdf0832.5fc8a8",
+    "name": "Timestamp",
+    "x": 238,
+    "y": 174,
+    "wires": [
+      [
+        "9536ac14.4f1cc8"
+      ]
+    ]
+  },
+  {
+    "id": "d63ea97e.a45678",
+    "type": "http request",
+    "z": "3bdf0832.5fc8a8",
+    "name": "Get power ",
+    "method": "GET",
+    "ret": "txt",
+    "url": "http://10.10.20.93/?cmd=511",
+    "x": 265,
+    "y": 77,
+    "wires": [
+      [
+        "8cd0d550.732f28"
+      ]
+    ]
+  },
+  {
+    "id": "281746e0.71b242",
+    "type": "inject",
+    "z": "3bdf0832.5fc8a8",
+    "name": "Startup",
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "repeat": "60",
+    "crontab": "",
+    "once": true,
+    "x": 88,
+    "y": 71,
+    "wires": [
+      [
+        "d63ea97e.a45678"
+      ]
+    ]
+  }
+]
